@@ -86,28 +86,41 @@ export const util = {
   addZero(num: number, length: number): string{
     return (Array(length).join('0') + num).slice(-length)
   },
-  // /**
-  //  * 删除请求参数的空值（lcq)
-  //  * @param params
-  //  * @param isJSON
-  //  * @return {string | *}
-  //  */
-  // noNoneGetParams(params, isJSON) {
-  //   const result = {}
-  //   params = params || {}
-  //
-  //   for (const key in params) {
-  //     if (params[key] !== '' &&
-  //       params[key] !== null && typeof params[key] !== 'undefined'
-  //       || params[key] === '0' || params[key] === 0 ) {
-  //       result[key] = params[key]
-  //     }
-  //   }
-  //   if (isJSON) {
-  //     return result
-  //   } else {
-  //     return querystring.stringify(result)
-  //   }
-  // },
+  /**
+   * 获取时间区间各个月份(wjh)
+   * @param data type 日期数组
+   * @return {Array}
+   */
+  getMonthArray(data: Array<string>):  Array<string>{
+    const timeline = []
+    let minMonth: any = null
+    let maxMonth: any = null
+    for (const item of data) {
+      const itemMoment = moment(item)
+      if (!minMonth) {
+        minMonth = itemMoment
+        maxMonth = itemMoment
+        continue
+      }
+      if (itemMoment.isBefore(minMonth)) {
+        minMonth = itemMoment
+        continue
+      }
+      if (itemMoment.isAfter(maxMonth)) {
+        maxMonth = itemMoment
+      }
+    }
+    const formatMinMonth: any = minMonth.format('YYYY-MM')
+    let formatMaxMonth: any = maxMonth.format('YYYY-MM')
+    timeline.push(formatMaxMonth)
+    while (formatMaxMonth !== formatMinMonth) {
+      const date: any = moment(formatMaxMonth).subtract(1, 'month')
+      const dateMonthYear: string = date.format('YYYY-MM')
+      timeline.push(dateMonthYear)
+      formatMaxMonth = dateMonthYear
+    }
+    timeline.reverse()
+    return timeline
+  },
 }
 export default util
