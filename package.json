@@ -16,6 +16,7 @@
         "test": "jest"
     },
     "dependencies": {
+        "file-loader": "^6.0.0",
         "moment": "^2.26.0"
     },
     "devDependencies": {

@@ -63,7 +63,7 @@ describe('util.getAge', () => {
     expect(result).toBe(20)
   })
   test('1999-10-08 12:10:10', () => {
-    const result = util.getAge('1999-10-08')
+    const result = util.getAge('1999-10-08 12:10:10')
     expect(result).toBe(20)
   })
   test('new Date()', () => {
@@ -113,6 +113,20 @@ describe('util.noNoneGetParams', () => {
     const jsonData = null
     const result = util.noNoneGetParams(jsonData)
     expect(result).toEqual('')
+  })
+  test('isJSON', () => {
+    interface Person{
+      name: string;
+      sex: number;
+      age: number;
+    }
+    const jsonData: Person = {
+      name: 'George',
+      sex: 1,
+      age: null
+    }
+    const result = util.noNoneGetParams(jsonData, true) as Person
+    expect(result.name).toEqual('George')
   })
 })
 

@@ -128,19 +128,17 @@ export const util = {
    * @param isJSON
    * @return {string | *}
    */
-  noNoneGetParams(params: object, isJSON = false): object | string{
+  noNoneGetParams<T>(params: T, isJSON = false): T | string{
     if(!params){
       return ''
     }
 
-    const result = {}
-    params = params || {}
-
+    const result: T = {...params}
     for (const key in params) {
       if(!Object.prototype.hasOwnProperty.call(params, key))continue
 
-      if (!util.isEmpty(params[key])) {
-        result[key] = params[key]
+      if (util.isEmpty(params[key])) {
+        delete result[key]
       }
     }
     if (isJSON) {
@@ -148,6 +146,19 @@ export const util = {
     } else {
       return querystring.stringify(result)
     }
+  },
+  /**
+   * 将图片转成base64(lcq)
+   * @param img(图片对象)
+   * @returns {string}(base64)
+   */
+  picToBase64(img: HTMLImageElement): string{
+    const canvas = document.createElement('canvas')
+    canvas.width = img.width
+    canvas.height = img.height
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0, img.width, img.height)
+    return canvas.toDataURL()
   },
 }
 export default util

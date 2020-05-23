@@ -18,6 +18,19 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(png|svg|jpg|gif|mp3|mp4)$/,
+        use: [
+          {
+            loader:'file-loader',
+            options: {
+              limit: 10000,
+              name:  'img/[name].[hash:7].[ext]'
+            }
+          }
+        ],
+
+      },
+      {
         test: /\.ts$/,
         enforce: 'pre',
         use: [
