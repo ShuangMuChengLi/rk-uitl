@@ -58,8 +58,9 @@ export const util = {
       fn();
     }
   },
+
   /**
-     * 超出省略
+     * 超出省略(wjh)
      * @param s 字符串
      * @param len 最大长度
      * @returns {String}
@@ -77,37 +78,11 @@ export const util = {
     }
   },
   /**
-   * 清除字符串左右两边空格
-   * @param str
-   * @returns {XML|string|*}
+   * 删除请求参数的空值（lcq)
+   * @param params
+   * @param isJSON
+   * @return {string | *}
    */
-  trim(str) {
-    str = _.trim(str);
-    str = str.replace(/\u202D/g, '');
-    str = str.replace(/\u202C/g, '');
-    return str;
-  },
-  /**
-   * 验证返回值 200 正常
-   * 用于正常情况下的  data数据不为空   对data做验证
-    */
-
-  verifyResponse(data) {
-    if (data && data.data && data.data.code) {
-      if (data.data.code === 200) {
-        if (data.data.data || data.data.data === 0) {
-          return data.data.data;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-
-    } else {
-      return false;
-    }
-  },
   noNoneGetParams(params, isJSON) {
     let result = {};
     params = params || {};
@@ -124,13 +99,21 @@ export const util = {
     } else {
       return querystring.stringify(result);
     }
-
   },
-  // 数字前补零
+  /**
+   * 数字前补零(wjh)
+   * @param num
+   * @param length
+   * @return {string}
+   */
   addZero(num, length) {
     return (Array(length).join(0) + num).slice(-length);
   },
-  // 获取时间区间各个月份
+  /**
+   * 获取时间区间各个月份(wjh)
+   * @param data
+   * @return {Array}
+   */
   getMonthArray(data) {
     let timeline = [];
     let minMonth = null;
@@ -162,115 +145,8 @@ export const util = {
     timeline.reverse();
     return timeline;
   },
-
   /**
-     * //跳转路由
-     * @param url vue路由
-     * @param basePage  html页面  默认index.html
-     * @param self    布尔型数据 是否当前页面打开  默认新窗口打开
-     */
-  async goto(url, basePage, self) {
-    let fn = ()=>{
-      let sUrl = '';
-      if(basePage){
-        sUrl = basePage;
-      }else{
-        sUrl = '/index.html';
-      }
-      if(!self){
-        window.open(sUrl + '#' + url);
-      }else{
-        window.location.href = sUrl + '#' + url;
-      }
-    };
-    fn();
-  },
-
-  setTitle(s) {
-    document.title = s;
-  },
-  toThousand(data) {
-    return mathUtil.toThousand(data);
-  },
-
-
-  /**
-   * 处理异常  登录过期  跳转登录页
-   * @param e
-   * @returns {boolean}
-   */
-  handleError(e) {
-    if (e.response && e.response.status) {
-      if (e.response.status === 401) {
-        // if (window.location.href.indexOf("/#/login") === -1) {
-        //   this.vue.$message.error("登录过期，请重新登录");
-        //   storageUtil.setSession("historyUrl", window.location.href);
-        //   window.location.href = "/#/login";
-        // }
-      }
-    }
-    // console.error(e);
-    return false;
-  },
-  /**
-   * 事件防抖动，用于mousemove scroll等频繁触发的事件的优化
-   * @param action  事件要执行方法
-   * @param delay  延时
-   * @return {Function}
-   */
-  debounce(action, delay){
-    let timer = null;
-    return function() {
-      let self = this,
-        args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        action.apply(self, args);
-      }, delay);
-    };
-  },
-  /**
-   * 事件节流，用于mousemove scroll等频繁触发的事件的优化
-   * @param action  事件要执行方法
-   * @param delay  延时
-   * @return {Function}
-   */
-  throttle(action, delay){
-    let statTime = 0;
-    return function() {
-      let currTime = +new Date();
-      if (currTime - statTime > delay) {
-        action.apply(this, arguments);
-        statTime = currTime;
-      }
-    };
-  },
-  /**
-   * 二维数组排列组合函数（兼容上一版本，建议直接用mathUtil）
-   * @param list  [ ['a1','a2'], ['b1','b2']]
-   * @return {any[]}  [ [ 'a1', 'b1' ], [ 'a1', 'b2' ], [ 'a2', 'b1' ], [ 'a2', 'b2' ] ]
-   */
-  combination(list){
-    // 兼容上一版本，建议直接用mathUtil
-    return mathUtil.combination(list);
-  },
-  /**
-   * 树形筛选（兼容上一版本，建议直接用mathUtil）
-   * @param tree
-   * [
-        {
-            id: 1,
-            children:[]
-        }
-   ]
-   * @param filterCondition   要筛选出的id列表 [221, 121];
-   * @returns {[]}
-   */
-  treeFilter(tree, filterCondition) {
-    return mathUtil.treeFilter(tree, filterCondition);
-  },
-  /**
-   * 将图片转成base64
+   * 将图片转成base64(lcq)
    * @param img(图片对象)
    * @returns {string}(base64)
    */
@@ -284,7 +160,7 @@ export const util = {
     return dataUrl;
   },
   /**
-   * 将base64转成文件
+   * 将base64转成文件(lcq)
    * @param img,base64
    * @returns {File}
    */
@@ -299,8 +175,4 @@ export const util = {
     let file = new File([u8arr], name, {type:mime});
     return file;
   },
-  use(vue) {
-    this.vue = vue;
-  },
-  vue: null
 };
