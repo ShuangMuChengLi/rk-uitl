@@ -115,3 +115,40 @@ describe('util.noNoneGetParams', () => {
     expect(result).toEqual('')
   })
 })
+
+describe('util.beyondShowDot', () => {
+  test('string length > 2', () => {
+    expect(util.beyondShowDot('beyondShowDot', 2)).toBe('be...')
+  })
+
+  test('string none', () => {
+    expect(util.beyondShowDot('', 2)).not.toBe('be...')
+  })
+  test('string none', () => {
+    expect(util.beyondShowDot('', 2)).toBe('')
+  })
+  test('string length > 14', () => {
+    expect(util.beyondShowDot('beyondShowDot', 14)).toBe('beyondShowDot')
+  })
+  test('string length > 14', () => {
+    expect(util.beyondShowDot('beyondShowDot', 14)).not.toBe('beyon...')
+  })
+})
+
+describe('util.addZero', () => {
+  test('input number 24 leng 4', () => {
+    expect(util.addZero(24, 4)).toBe('0024')
+  })
+  test('input number 24 leng 3', () => {
+    expect(util.addZero(24, 3)).not.toBe('0024')
+  })
+})
+
+describe('util.getMonthArray', () => {
+  test('input monthList [201811, 202012]', () => {
+    expect(util.getMonthArray(['201811', '201902'])).toStrictEqual(['2018-11', '2018-12', '2019-01', '2019-02'])
+  })
+  test('input monthList [201811, 201810, 201902, 201901]', () => {
+    expect(util.getMonthArray(['201811', '201810', '201902', '201901'])).toStrictEqual(['2018-10','2018-11', '2018-12', '2019-01', '2019-02'])
+  })
+})
