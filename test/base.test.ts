@@ -85,3 +85,15 @@ describe('util.keydownEnter', () => {
     });
   });
 });
+
+describe('util.beyondShowDot', () => {
+  test('string length > 2', () => {
+    expect(util.beyondShowDot('beyondShowDot', 2)).toBe('be...');
+  });
+  test('string length > 14', () => {
+    expect(util.beyondShowDot('beyondShowDot', 14)).toBe('beyondShowDot');
+  });
+  test('string length > 14', () => {
+    expect(util.beyondShowDot('beyondShowDot', 14)).not.toBe('beyon...');
+  });
+});

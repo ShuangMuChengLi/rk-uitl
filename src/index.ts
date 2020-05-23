@@ -51,7 +51,7 @@ export const util = {
    * @param notEnterFn  非回车回调函数
    * @return boolean
    */
-  keydownEnter(e: KeyboardEvent, fn?, notEnterFn?) {
+  keydownEnter(e: KeyboardEvent, fn?, notEnterFn?){
     const code = e.code;
     if (code === 'Enter') {
       fn();
@@ -65,17 +65,26 @@ export const util = {
    * @param len 最大长度
    * @returns {String}
    */
-  // beyondShowDot(s: String, len: number) : string{
-  //   if (s) {
-  //     let stringLength = s.length;
-  //     if (stringLength <= len) {
-  //       return s;
-  //     } else {
-  //       return s.substr(0, len) + '...';
-  //     }
-  //   } else {
-  //     return '';
-  //   }
+  beyondShowDot(s: string, len: number): string{
+    if (s) {
+      const stringLength = s.length;
+      if (stringLength <= len) {
+        return s;
+      } else {
+        return s.substr(0, len) + '...';
+      }
+    } else {
+      return '';
+    }
+  },
+  // /**
+  //  * 数字前补零(wjh)
+  //  * @param num
+  //  * @param length
+  //  * @return {string}
+  //  */
+  // addZero(num: number, length) {
+  //   return (Array(length).join(0) + num).slice(-length);
   // },
 };
 export default util;
