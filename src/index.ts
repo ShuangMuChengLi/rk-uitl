@@ -51,7 +51,7 @@ export const util = {
    * @param notEnterFn  非回车回调函数
    * @return boolean
    */
-  keydownEnter(e: KeyboardEvent, fn?, notEnterFn?) {
+  keydownEnter(e: KeyboardEvent, fn?, notEnterFn?):void {
     const code = e.code;
     if (code === 'Enter') {
       fn();
