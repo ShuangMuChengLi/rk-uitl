@@ -91,7 +91,7 @@ export const util = {
    * @param data type 日期数组
    * @return {Array}
    */
-  getMonthArray(data: Array<string>):  Array<string>{
+  getMonthArray<T>(data: Array<T>):  Array<string>{
     const timeline = []
     let minMonth: any = null
     let maxMonth: any = null
@@ -110,8 +110,8 @@ export const util = {
         maxMonth = itemMoment
       }
     }
-    const formatMinMonth: any = minMonth.format('YYYY-MM')
-    let formatMaxMonth: any = maxMonth.format('YYYY-MM')
+    const formatMinMonth: string = minMonth.format('YYYY-MM')
+    let formatMaxMonth: string = maxMonth.format('YYYY-MM')
     timeline.push(formatMaxMonth)
     while (formatMaxMonth !== formatMinMonth) {
       const date: any = moment(formatMaxMonth).subtract(1, 'month')
@@ -148,6 +148,23 @@ export const util = {
     } else {
       return querystring.stringify(result)
     }
+  },
+  /**
+   * 将base64转成文件(lcq)
+   * @param img,base64
+   * @returns {File}
+   */
+  base64toFile<T>(img: string, name: string): File{
+    const bstr: string = atob(img.split(',')[1])
+    const rules = new RegExp(/:(.*?);/)
+    const mime = rules.exec(img)[1]
+    // console.log(rules.exec(img))
+    let n = bstr.length
+    const u8arr = new Uint8Array(n)
+    while (n--){
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], name, {type:mime})
   },
 }
 export default util
