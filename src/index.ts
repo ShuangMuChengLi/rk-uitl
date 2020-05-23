@@ -1,8 +1,8 @@
 /**
  * Created by lin on 2017/7/28.
  */
-import * as moment from 'moment';
-
+import * as moment from 'moment'
+import querystring from 'querystring'
 export const util = {
   /**
    * 移除对象中值为空的键值对
@@ -10,9 +10,9 @@ export const util = {
    */
   objectRemoveValueIsNull<T>(obj: T): T{
     for (const i in obj) {
-      const item = obj[i];
+      const item = obj[i]
       if (this.isEmpty(item)) {
-        delete obj[i];
+        delete obj[i]
       }
     }
     return obj
@@ -23,7 +23,7 @@ export const util = {
    * @returns {boolean}
    */
   isEmpty<T>(arg1: T): boolean {
-    return !arg1 && typeof arg1 !== 'number' && typeof arg1 !== 'boolean';
+    return !arg1 && typeof arg1 !== 'number' && typeof arg1 !== 'boolean'
   },
   /**
    * 判断对象为无属性对象
@@ -31,7 +31,7 @@ export const util = {
    * @returns {boolean} 如果为空对象，返回true  如果为非空对象，返回false
    */
   isEmptyObject<T>(e: T): boolean {
-    return Object.getOwnPropertyNames(e).length === 0;
+    return Object.getOwnPropertyNames(e).length === 0
   },
   /**
    * 计算年龄
@@ -39,10 +39,10 @@ export const util = {
    * @return String
    */
   getAge<T>(birthday: T): number{
-    const birthdayTimestamp = moment(birthday, 'YYYY-MM-DD').toDate().getTime();
-    const nowTimestamp = new Date().getTime();
-    const tempTime: number = nowTimestamp - birthdayTimestamp;
-    return Math.floor(tempTime / 1000 / 60 / 60 / 24 / 365);
+    const birthdayTimestamp = moment(birthday, 'YYYY-MM-DD').toDate().getTime()
+    const nowTimestamp = new Date().getTime()
+    const tempTime: number = nowTimestamp - birthdayTimestamp
+    return Math.floor(tempTime / 1000 / 60 / 60 / 24 / 365)
   },
   /**
    * 回车键事件
@@ -51,12 +51,12 @@ export const util = {
    * @param notEnterFn  非回车回调函数
    * @return boolean
    */
-  keydownEnter(e: KeyboardEvent, fn?, notEnterFn?){
-    const code = e.code;
+  keydownEnter(e: KeyboardEvent, fn?, notEnterFn?): void {
+    const code = e.code
     if (code === 'Enter') {
-      fn();
+      fn()
     }else {
-      notEnterFn();
+      notEnterFn()
     }
   },
   /**
@@ -86,5 +86,28 @@ export const util = {
   // addZero(num: number, length) {
   //   return (Array(length).join(0) + num).slice(-length);
   // },
-};
-export default util;
+  /**
+   * 删除请求参数的空值（lcq)
+   * @param params
+   * @param isJSON
+   * @return {string | *}
+   */
+  noNoneGetParams(params, isJSON) {
+    const result = {}
+    params = params || {}
+
+    for (const key in params) {
+      if (params[key] !== '' &&
+        params[key] !== null && typeof params[key] !== 'undefined'
+        || params[key] === '0' || params[key] === 0 ) {
+        result[key] = params[key]
+      }
+    }
+    if (isJSON) {
+      return result
+    } else {
+      return querystring.stringify(result)
+    }
+  },
+}
+export default util
