@@ -9,8 +9,8 @@ export const util = {
    * @param obj
    */
   objectRemoveValueIsNull<T>(obj: T): T{
-    for (let i in obj) {
-      let item = obj[i];
+    for (const i in obj) {
+      const item = obj[i];
       if (this.isEmpty(item)) {
         delete obj[i];
       }
@@ -22,7 +22,7 @@ export const util = {
    * @param arg1
    * @returns {boolean}
    */
-  isEmpty<T>(arg1:T):boolean {
+  isEmpty<T>(arg1: T): boolean {
     return !arg1 && typeof arg1 !== 'number' && typeof arg1 !== 'boolean';
   },
   /**
@@ -38,10 +38,10 @@ export const util = {
    * @param birthday String '1988-10-06' |Date
    * @return String
    */
-  getAge<T>(birthday: T) : number{
-    let birthdayTimestamp = moment(birthday, 'YYYY-MM-DD').toDate().getTime();
-    let nowTimestamp = new Date().getTime();
-    let tempTime: number = nowTimestamp - birthdayTimestamp;
+  getAge<T>(birthday: T): number{
+    const birthdayTimestamp = moment(birthday, 'YYYY-MM-DD').toDate().getTime();
+    const nowTimestamp = new Date().getTime();
+    const tempTime: number = nowTimestamp - birthdayTimestamp;
     return Math.floor(tempTime / 1000 / 60 / 60 / 24 / 365);
   },
   /**
@@ -52,7 +52,7 @@ export const util = {
    * @return boolean
    */
   keydownEnter(e: KeyboardEvent, fn?, notEnterFn?) {
-    let code = e.code;
+    const code = e.code;
     if (code === 'Enter') {
       fn();
     }else {

@@ -16,7 +16,6 @@
         "test": "jest"
     },
     "dependencies": {
-        "@types/moment": "^2.13.0",
         "moment": "^2.26.0"
     },
     "devDependencies": {
