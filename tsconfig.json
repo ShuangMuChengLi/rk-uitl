@@ -4,12 +4,6 @@
     "outDir": "dist",
     "types" : ["jest"]
   },
-  "include": [
-    "src/**/*",
-    "demo",
-    "demo/**/*",
-    "test"
-  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
