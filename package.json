@@ -12,7 +12,7 @@
     "scripts": {
         "build": "webpack --config webpack.production.js",
         "dev": "webpack-dev-server --config webpack.dev.js",
-        "lint": "eslint --fix --ext ts src demo",
+        "lint": "eslint --fix --ext ts,js src test",
         "test": "jest"
     },
     "dependencies": {

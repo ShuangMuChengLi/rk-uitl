@@ -13,6 +13,7 @@
     "semi": [
       "error",
       "never"
-    ]
+    ],
+    "@typescript-eslint/no-empty-function": 0
   }
 }

@@ -2,7 +2,7 @@
  * Created by lin on 2017/7/28.
  */
 import * as moment from 'moment'
-import querystring from 'querystring'
+import * as querystring from 'querystring'
 export const util = {
   /**
    * 移除对象中值为空的键值对
@@ -83,14 +83,18 @@ export const util = {
    * @param isJSON
    * @return {string | *}
    */
-  noNoneGetParams(params, isJSON) {
+  noNoneGetParams(params: object, isJSON = false): object | string{
+    if(!params){
+      return ''
+    }
+
     const result = {}
     params = params || {}
 
     for (const key in params) {
-      if (params[key] !== '' &&
-        params[key] !== null && typeof params[key] !== 'undefined'
-        || params[key] === '0' || params[key] === 0 ) {
+      if(!Object.prototype.hasOwnProperty.call(params, key))continue
+
+      if (!util.isEmpty(params[key])) {
         result[key] = params[key]
       }
     }

@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "types" : ["jest"]
   },
   "include": [
     "src/**/*",
-    "demo"
+    "demo",
+    "test"
   ],
   "exclude": [
     "node_modules",
