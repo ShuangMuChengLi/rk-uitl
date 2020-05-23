@@ -2,7 +2,7 @@
  * Created by lin on 2017/7/28.
  */
 import * as moment from 'moment'
-import querystring from 'querystring'
+// import querystring from 'querystring'
 export const util = {
   /**
    * 移除对象中值为空的键值对
@@ -67,47 +67,47 @@ export const util = {
    */
   beyondShowDot(s: string, len: number): string{
     if (s) {
-      const stringLength = s.length;
+      const stringLength = s.length
       if (stringLength <= len) {
-        return s;
+        return s
       } else {
-        return s.substr(0, len) + '...';
+        return s.substr(0, len) + '...'
       }
     } else {
-      return '';
+      return ''
     }
+  },
+  /**
+   * 数字前补零(wjh)
+   * @param num
+   * @param length
+   * @return {string}
+   */
+  addZero(num: number, length: number): string{
+    return (Array(length).join('0') + num).slice(-length)
   },
   // /**
-  //  * 数字前补零(wjh)
-  //  * @param num
-  //  * @param length
-  //  * @return {string}
+  //  * 删除请求参数的空值（lcq)
+  //  * @param params
+  //  * @param isJSON
+  //  * @return {string | *}
   //  */
-  // addZero(num: number, length) {
-  //   return (Array(length).join(0) + num).slice(-length);
+  // noNoneGetParams(params, isJSON) {
+  //   const result = {}
+  //   params = params || {}
+  //
+  //   for (const key in params) {
+  //     if (params[key] !== '' &&
+  //       params[key] !== null && typeof params[key] !== 'undefined'
+  //       || params[key] === '0' || params[key] === 0 ) {
+  //       result[key] = params[key]
+  //     }
+  //   }
+  //   if (isJSON) {
+  //     return result
+  //   } else {
+  //     return querystring.stringify(result)
+  //   }
   // },
-  /**
-   * 删除请求参数的空值（lcq)
-   * @param params
-   * @param isJSON
-   * @return {string | *}
-   */
-  noNoneGetParams(params, isJSON) {
-    const result = {}
-    params = params || {}
-
-    for (const key in params) {
-      if (params[key] !== '' &&
-        params[key] !== null && typeof params[key] !== 'undefined'
-        || params[key] === '0' || params[key] === 0 ) {
-        result[key] = params[key]
-      }
-    }
-    if (isJSON) {
-      return result
-    } else {
-      return querystring.stringify(result)
-    }
-  },
 }
 export default util

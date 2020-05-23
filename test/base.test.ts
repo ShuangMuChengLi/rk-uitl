@@ -97,3 +97,12 @@ describe('util.beyondShowDot', () => {
     expect(util.beyondShowDot('beyondShowDot', 14)).not.toBe('beyon...');
   });
 });
+
+describe('util.addZero', () => {
+  test('input number 24 leng 4', () => {
+    expect(util.addZero(24, 4)).toBe('0024');
+  });
+  test('input number 24 leng 3', () => {
+    expect(util.addZero(24, 3)).not.toBe('0024');
+  });
+});
