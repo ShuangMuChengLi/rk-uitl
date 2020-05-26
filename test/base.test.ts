@@ -173,7 +173,7 @@ describe('util.getMonthArray', () => {
 
 describe('util.combination', () => {
   test('correct result', () => {
-    let result = util.combination([ ['a1','a2'], ['b1','b2']])
+    const result = util.combination([ ['a1','a2'], ['b1','b2']])
     expect(result[0][0]).toEqual('a1')
     expect(result[0][1]).toEqual('b1')
 
@@ -190,7 +190,7 @@ describe('util.combination', () => {
 
 describe('util.treeFilter', () => {
   test('correct result', () => {
-    let tree = [
+    const tree = [
       {
         id: '1',
         name:'1',
@@ -202,20 +202,20 @@ describe('util.treeFilter', () => {
         children:[]
       }
     ]
-    let result = util.treeFilter(tree, ['1'])
+    const result = util.treeFilter(tree, ['1'])
     expect(result[0].name).toEqual('1')
   })
 })
 
 describe('util.toThousand', () => {
   test('number', () => {
-    let data = 123456
-    let result = util.toThousand(data)
+    const data = 123456
+    const result = util.toThousand(data)
     expect(result).toEqual('123,456')
   })
   test('string', () => {
-    let data = '123456'
-    let result = util.toThousand(data)
+    const data = '123456'
+    const result = util.toThousand(data)
     expect(result).toEqual('123,456')
   })
 })

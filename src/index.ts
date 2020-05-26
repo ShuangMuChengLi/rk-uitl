@@ -162,7 +162,8 @@ export const util = {
   },
   /**
    * 将base64转成文件(lcq)
-   * @param img,base64
+   * @param img string base64
+   * @param name string filename
    * @returns {File}
    */
   base64toFile<T>(img: string, name: string): File{
@@ -188,41 +189,41 @@ export const util = {
    * 5、直到循环1循环结束，算法结束
    */
   combination<T>(list: Array<Array<T>>): Array<Array<T>>{
-    let pointList = []; // 游标列表
-    let maxLengthList = []; // 二维列表每一项的长度数组列表
-    let length = 1;
+    const pointList = [] // 游标列表
+    const maxLengthList = [] // 二维列表每一项的长度数组列表
+    let length = 1
     // 构建游标列表和二维列表每一项的长度数组列表
     for(let groupIndex = 0; groupIndex < list.length ; groupIndex ++){
-      let group = list[groupIndex];
-      maxLengthList.push(group.length);
-      length = length * group.length;
-      pointList.push(0);
+      const group = list[groupIndex]
+      maxLengthList.push(group.length)
+      length = length * group.length
+      pointList.push(0)
     }
     /**
      * 游标列表更新函数
      */
-    function updatePointList() {
+    function updatePointList(): void {
       for(let i = pointList.length - 1; i > -1; i--){
         if(pointList[i] < maxLengthList[i] - 1){
-          pointList[i] ++;
-          break;
+          pointList[i] ++
+          break
         }
 
-        pointList[i] = 0;
+        pointList[i] = 0
       }
     }
-    let result = [];// 结果队列
+    const result = []// 结果队列
     for(let resultIndex = 0 ; resultIndex < length ; resultIndex ++){
-      result[resultIndex] = [];
+      result[resultIndex] = []
       // 根据游标队列定位到各项item的位置
       for(let pointIndex = 0 ; pointIndex < pointList.length ; pointIndex ++){
-        let point = pointList[pointIndex];
-        result[resultIndex].push(list[pointIndex][point]);
+        const point = pointList[pointIndex]
+        result[resultIndex].push(list[pointIndex][point])
       }
-      updatePointList();
+      updatePointList()
 
     }
-    return result;
+    return result
   },
   /**
    * 树形筛选
@@ -236,28 +237,28 @@ export const util = {
    * @param filterCondition   要筛选出的id列表 [221, 121];
    * @returns {[]}
    */
-  treeFilter<T>(tree:Array<T>, filterCondition:Array<string>): Array<T>{
-    function throughFilter(treePart) {
-      let result = [];
-      for(let item of treePart){
+  treeFilter<T>(tree: Array<T>, filterCondition: Array<string>): Array<T>{
+    function throughFilter(treePart): Array<T> {
+      const result = []
+      for(const item of treePart){
         if(filterCondition.indexOf(item.id) !== -1){
-          result.push(item);
-          continue;
+          result.push(item)
+          continue
         }
 
         if(!item.children || !item.children.length){
-          continue;
+          continue
         }
 
-        let childrenResult = throughFilter(item.children);
+        const childrenResult = throughFilter(item.children)
         if(childrenResult.length > 0){
-          item.children = childrenResult;
-          result.push(item);
+          item.children = childrenResult
+          result.push(item)
         }
       }
-      return result;
+      return result
     }
-    return throughFilter(tree);
+    return throughFilter(tree)
   },
 
   /**
@@ -265,17 +266,17 @@ export const util = {
    * @param data string| number
    * @return string
    */
-  toThousand(data:string | number):string {
+  toThousand(data: string | number): string {
     if (!data) {
-      return '';
+      return ''
     }
-    let value = data.toString();
-    let trans = '';
+    let value = data.toString()
+    let trans = ''
     while (value.length > 3) {
-      trans = ',' + value.slice(-3) + trans;
-      value = value.slice(0, value.length - 3);
+      trans = ',' + value.slice(-3) + trans
+      value = value.slice(0, value.length - 3)
     }
-    return value + trans;
+    return value + trans
   }
 }
 export default util

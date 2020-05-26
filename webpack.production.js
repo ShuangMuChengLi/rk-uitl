@@ -18,7 +18,10 @@ module.exports = {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js']
   },
-
+  externals : {
+    moment: 'moment',
+    querystring: 'querystring',
+  },
   module: {
     rules: [
       {
