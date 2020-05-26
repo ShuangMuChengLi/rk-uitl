@@ -170,9 +170,52 @@ describe('util.getMonthArray', () => {
     expect(util.getMonthArray(dateList)).toStrictEqual(['2018-10','2018-11', '2018-12', '2019-01'])
   })
 })
-// describe('util.base64toFile', () => {
-//   test('base64toFile', () => {
-//     const image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAACGCAIAAAA99GE/AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUEzMkFCRjI4MDRFMTFFQUI2MkFBMkE3QjZCN0ZEODAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUEzMkFCRjM4MDRFMTFFQUI2MkFBMkE3QjZCN0ZEODAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QTMyQUJGMDgwNEUxMUVBQjYyQUEyQTdCNkI3RkQ4MCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QTMyQUJGMTgwNEUxMUVBQjYyQUEyQTdCNkI3RkQ4MCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtoLUKwAAAFPSURBVHja7NtJCsIwGAbQKHGCgu69gCfwNF7fAwgFKxaxioIDSLuIcXjfIpsO+XmENJCmt1iuQqLEQaj3Le9drzfz+TRkzLXafpD7ECFChAgRIkSIECFChAgRIkSIEBEiRIgQIUKECBEiRIgQIUKECBEhQoQIkW8QiUUxnM2a9isUbquNp/84U0iPJ71zG6pdqwdG40SVdK02tv8Jt1MO1bbpoGnbvn9XhXqUS+S22pioj7osT6MjDXfSas2svjVEiBAhQuTt69csvZblZZ1SFIOuV40RIkSIECFChAgRIkSECBEiRIgQIUKECBEiRIgQ+a/k2dN7vVmXZSvPGCFChAgRIkSIECFChAgRIkSICBEiRIh8uIgz4U/SzoQ/xJnwxzgTbmYlQoSIECFChAgRIkSIECFChAgRIkSICBEiRIgQIUKECBEiRIj8Ro4CDABFkl3AZSyWGwAAAABJRU5ErkJggg==';
-//     util.base64toFile(image, 'test')
-//   })
-// })
+
+describe('util.combination', () => {
+  test('correct result', () => {
+    let result = util.combination([ ['a1','a2'], ['b1','b2']])
+    expect(result[0][0]).toEqual('a1')
+    expect(result[0][1]).toEqual('b1')
+
+    expect(result[1][0]).toEqual('a1')
+    expect(result[1][1]).toEqual('b2')
+
+    expect(result[2][0]).toEqual('a2')
+    expect(result[2][1]).toEqual('b1')
+
+    expect(result[3][0]).toEqual('a2')
+    expect(result[3][1]).toEqual('b2')
+  })
+})
+
+describe('util.treeFilter', () => {
+  test('correct result', () => {
+    let tree = [
+      {
+        id: '1',
+        name:'1',
+        children:[]
+      },
+      {
+        id: '2',
+        name:'2',
+        children:[]
+      }
+    ]
+    let result = util.treeFilter(tree, ['1'])
+    expect(result[0].name).toEqual('1')
+  })
+})
+
+describe('util.toThousand', () => {
+  test('number', () => {
+    let data = 123456
+    let result = util.toThousand(data)
+    expect(result).toEqual('123,456')
+  })
+  test('string', () => {
+    let data = '123456'
+    let result = util.toThousand(data)
+    expect(result).toEqual('123,456')
+  })
+})
