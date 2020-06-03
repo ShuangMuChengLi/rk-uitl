@@ -219,3 +219,49 @@ describe('util.toThousand', () => {
     expect(result).toEqual('123,456')
   })
 })
+
+describe('util.getCenterPointFromListOfCoordinates', () => {
+  test('right', () => {
+    const data = [
+      {
+        lon: 118.10006899260253,
+        lat: 24.473198023001295,
+        id:'2'
+      },
+      {
+        lon: 118.11170556859076,
+        lat: 24.42742749078093,
+        id:'3'
+      },
+      {
+        lon: 118.16135495947387,
+        lat: 24.46388876221071,
+        id:'3'
+      },
+    ]
+    const result = util.getCenterPointFromListOfCoordinates(data)
+    expect(result.lon).toEqual(118.12437588341213)
+    expect(result.lat).toEqual(24.45484041465609)
+    expect(result.lonLat).toStrictEqual([118.12437588341213, 24.45484041465609])
+  })
+  test('lonLat', () => {
+    const data = [
+      {
+        lonLat: [118.10006899260253, 24.473198023001295],
+        id:'2'
+      },
+      {
+        lonLat: [118.11170556859076, 24.42742749078093],
+        id:'3'
+      },
+      {
+        lonLat: [118.16135495947387, 24.46388876221071],
+        id:'4'
+      },
+    ]
+    const result = util.getCenterPointFromListOfCoordinates(data)
+    expect(result.lon).toEqual(118.12437588341213)
+    expect(result.lat).toEqual(24.45484041465609)
+    expect(result.lonLat).toStrictEqual([118.12437588341213, 24.45484041465609])
+  })
+})

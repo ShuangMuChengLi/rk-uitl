@@ -3,6 +3,11 @@
  */
 import * as moment from 'moment'
 import * as querystring from 'querystring'
+interface Coordinate {
+  lon?: number;
+  lat?: number;
+  lonLat?: Array<number>;
+}
 export const util = {
   /**
    * 移除对象中值为空的键值对
@@ -277,6 +282,38 @@ export const util = {
       value = value.slice(0, value.length - 3)
     }
     return value + trans
+  },
+  /**
+   * 根据一组经纬度获取中心点
+   * http://www.geomidpoint.com/calculation.html
+   * @param coordinateList
+   */
+  getCenterPointFromListOfCoordinates(coordinateList: Array<Coordinate>): Coordinate{
+    const total = coordinateList.length
+    let X = 0
+    let Y = 0
+    let Z = 0
+    for(const coordinate of coordinateList){
+      let lon = coordinate.lon || coordinate.lonLat[0]
+      let lat = coordinate.lat || coordinate.lonLat[1]
+      lat = lat * Math.PI / 180
+      lon = lon * Math.PI / 180
+      X += Math.cos(lat) * Math.cos(lon)
+      Y += Math.cos(lat) * Math.sin(lon)
+      Z += Math.sin(lat)
+    }
+    X = X / total
+    Y = Y / total
+    Z = Z / total
+    const lon2 = Math.atan2(Y, X)
+    const hyp = Math.sqrt(X * X + Y * Y)
+    const lat2 = Math.atan2(Z, hyp)
+    const lonLat = [lon2 * 180 / Math.PI, lat2 * 180 / Math.PI]
+    return {
+      lon: lonLat[0],
+      lat: lonLat[1],
+      lonLat: lonLat
+    }
   }
 }
 export default util
